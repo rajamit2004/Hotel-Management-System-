@@ -1,0 +1,165 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+#define MAX_HOTEL 100
+
+struct Hotel {
+    string name;
+    int room_available;
+    string location;
+    int rating;
+    int price_per_room;
+};
+
+struct User {
+    string name;
+    int user_id;
+    int booking_cost;
+    string hotel_name;
+};
+
+// Function to print hotels
+void print_hotels(const vector<Hotel>& hotels) {
+    cout << "Hotel Name\tRoom Available\tLocation\tRating\tPrice Per Room\n";
+    for (const auto& hotel : hotels) {
+        cout << hotel.name << "\t\t" << hotel.room_available << "\t\t" 
+             << hotel.location << "\t" << hotel.rating << "\t" 
+             << hotel.price_per_room << endl;
+    }
+}
+
+// Function to sort hotels by name
+void sort_hotels_by_name(vector<Hotel>& hotels) {
+    sort(hotels.begin(), hotels.end(), [](const Hotel& a, const Hotel& b) {
+        return a.name < b.name;
+    });
+    cout << "Hotels sorted by name.\n";
+}
+
+// Function to sort hotels by rating
+void sort_hotels_by_rating(vector<Hotel>& hotels) {
+    sort(hotels.begin(), hotels.end(), [](const Hotel& a, const Hotel& b) {
+        return a.rating > b.rating;
+    });
+    cout << "Hotels sorted by rating.\n";
+}
+
+// Function to display hotels in a specific location
+void get_hotels_for_location(const vector<Hotel>& hotels, const string& location) {
+    cout << "Hotels in " << location << ":\n";
+    for (const auto& hotel : hotels) {
+        if (hotel.location == location) {
+            cout << hotel.name << "\t" << hotel.room_available << "\t" << hotel.rating << endl;
+        }
+    }
+}
+
+// Function to book a hotel
+void book_hotel(vector<Hotel>& hotels, vector<User>& users) {
+    string user_name, hotel_name;
+    int user_id;
+
+    cout << "Enter your User ID: ";
+    cin >> user_id;
+    
+    if (user_id <= 0 || user_id > users.size()) {
+        cout << "Invalid User ID!\n";
+        return;
+    }
+    
+    cout << "Enter your Name: ";
+    cin >> user_name;
+    cout << "Enter Hotel Name to book: ";
+    cin.ignore();
+    getline(cin, hotel_name);
+
+    for (auto& hotel : hotels) {
+        if (hotel.name == hotel_name && hotel.room_available > 0) {
+            hotel.room_available--;
+            users[user_id - 1].hotel_name = hotel_name;
+            users[user_id - 1].booking_cost += hotel.price_per_room;
+            cout << "Booking successful for " << hotel_name << "!\n";
+            return;
+        }
+    }
+    cout << "Hotel not found or no available rooms!\n";
+}
+
+// Function to print user booking data
+void print_user_booking_data(const vector<User>& users) {
+    cout << "User Name\tUser ID\tHotel Name\tBooking Cost\n";
+    for (const auto& user : users) {
+        cout << user.name << "\t" << user.user_id << "\t" 
+             << (user.hotel_name.empty() ? "None" : user.hotel_name) << "\t" 
+             << user.booking_cost << endl;
+    }
+}
+
+// Main function
+int main() {
+    vector<Hotel> hotels = {
+        {"HOTEL ADITYAZ", 50, "GWALIOR", 3, 800},
+        {"MAHIMA HOTEL", 40, "GWALIOR", 4, 2000},
+        {"TAJ HOTEL", 1000, "GWALIOR", 5, 2500},
+        {"AMRIT", 100, "GWALIOR", 2, 250},
+        {"KRISHNA", 300, "GWALIOR", 3, 200},
+        {"RAM PALACE", 10000, "GWALIOR", 5, 500},
+        {"SIYA INTERNATIONAL", 60, "GWALIOR", 2, 8000}
+    };
+
+    vector<User> users = {
+        {"User1", 1, 0, ""},
+        {"User2", 2, 0, ""}
+    };
+
+    int choice;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Display all hotels\n";
+        cout << "2. Sort hotels by name\n";
+        cout << "3. Sort hotels by rating\n";
+        cout << "4. Find hotels by location\n";
+        cout << "5. Book a hotel\n";
+        cout << "6. Print user booking data\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                print_hotels(hotels);
+                break;
+            case 2:
+                sort_hotels_by_name(hotels);
+                break;
+            case 3:
+                sort_hotels_by_rating(hotels);
+                break;
+            case 4: {
+                string location;
+                cout << "Enter location: ";
+                cin >> location;
+                get_hotels_for_location(hotels, location);
+                break;
+            }
+            case 5:
+                book_hotel(hotels, users);
+                break;
+            case 6:
+                print_user_booking_data(users);
+                break;
+            case 0:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+        }
+    } while (choice != 0);
+
+    return 0;
+}
