@@ -1,0 +1,152 @@
+# Hotel-Management-System-
+
+System Overview
+
+This C++ program implements a comprehensive hotel booking management system that allows users to browse, sort, and book hotels while maintaining user booking records. The system features hotel listings with availability tracking, user management, and multiple sorting/filtering options.
+
+Core Data Structures
+Hotel Structure
+Contains essential hotel properties:
+
+name: Hotel name (string)
+
+room_available: Current available rooms (integer)
+
+location: Geographical location (string)
+
+rating: Quality rating (1-5 scale)
+
+price_per_room: Cost per room (integer)
+
+User Structure
+Tracks customer booking information:
+
+name: User's name (string)
+
+user_id: Unique identifier (integer)
+
+booking_cost: Accumulated booking expenses (integer)
+
+hotel_name: Currently booked hotel (string)
+
+Key Functionalities
+1. Hotel Display & Sorting
+print_hotels(): Displays all hotels in tabular format with complete details
+
+sort_hotels_by_name(): Alphabetically sorts hotels A-Z using standard sort algorithm
+
+sort_hotels_by_rating(): Sorts hotels by rating (highest first) via custom comparator
+
+2. Location-Based Filtering
+get_hotels_for_location(): Filters and displays hotels in specified locations
+
+Accepts location input and shows matching hotels with condensed information
+
+3. Booking Management
+book_hotel(): Handles the booking process with:
+
+User ID validation
+
+Hotel availability checks
+
+Room count decrement
+
+User record updating
+
+Implements fail-safes for invalid bookings
+
+4. User Reporting
+print_user_booking_data(): Generates comprehensive booking report showing:
+
+User identification
+
+Booked hotel (or "None")
+
+Total accumulated costs
+
+System Workflow
+Initialization
+
+Prepopulates hotel data with sample entries
+
+Creates default user accounts
+
+Menu-Driven Interface
+
+Presents 6 core options plus exit
+
+Handles invalid inputs gracefully
+
+Persistent Data Management
+
+Maintains real-time updates of:
+
+Hotel room availability
+
+User booking status
+
+Financial tracking
+
+Technical Implementation Details
+Memory Management
+Uses STL vectors for dynamic storage
+
+MAX_HOTEL constant defines theoretical capacity
+
+Input Handling
+Combines cin and getline() for robust input
+
+Implements basic input validation
+
+Sorting Algorithms
+Leverages STL sort with lambda comparators
+
+Implements both ascending and descending sorts
+
+Usage Examples
+Finding Available Hotels
+
+Filter by location "GWALIOR"
+
+Sort by rating to see best options first
+
+Complete Booking Cycle
+
+User selects hotel
+
+System verifies availability
+
+Updates both hotel and user records
+
+Administrative Reporting
+
+View all booking records
+
+Track revenue per user
+
+Potential Enhancements
+Extended Features
+
+Date-based availability
+
+Room type differentiation
+
+Payment processing
+
+Technical Improvements
+
+File-based data persistence
+
+Multithreading for concurrent bookings
+
+GUI interface
+
+Business Logic
+
+Discount systems
+
+Loyalty programs
+
+Cancellation policies
+
+This system provides a solid foundation for hotel reservation management with clean separation of concerns between data management, business logic, and user interface components. The modular design allows for straightforward expansion to meet evolving requirements.
